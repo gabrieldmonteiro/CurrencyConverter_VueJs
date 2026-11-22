@@ -2,7 +2,6 @@
   <div class="converter">
     <h2>{{currA}} to {{currB}}</h2>
     <input type="text" v-model="currA_value" v-bind:placeholder="currA">
-    <input type="button" value="Convert" v-on:click="converter">
     <h2>{{currB_value}}</h2>
   </div>
 </template>
@@ -14,10 +13,19 @@ export default {
 
   data() {
     return {
-      currA_value: "",
+      currA_value: "1",
       currB_value: 0
     };
-  },  
+  },
+  watch: {
+    // converte ao digitar e na carga inicial (immediate)
+    currA_value: {
+      immediate: true,
+      handler() {
+        this.converter();
+      }
+    }
+  },
   methods: {
     converter() {
       let cA = this.currA;

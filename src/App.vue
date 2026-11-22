@@ -17,7 +17,7 @@
     <Converter currA="BRL" currB="EUR"></Converter>
     </div>
     <footer class="footerStyle">
-      <a href="https://github.com/gabrieldmonteiro" target="blank">github.com/gabrieldmonteiro</a>
+      <a href="https://gabrieldmonteiro.com.br" target="blank">gabrieldmonteiro.com.br</a>
     </footer>
   </div>
 </template>
