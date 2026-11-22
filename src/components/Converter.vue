@@ -40,9 +40,11 @@ export default {
         })
         .then(json => {
           let cot = json.rates[cB];
+          // eslint-disable-next-line no-console
           console.log("Current value from 1 " + cA + " to 1 " + cB + " : " + cot);
           this.currB_value = (cot * amount).toFixed(2);
         })
+        // eslint-disable-next-line no-console
         .catch(err => console.error(err));
     }
   }
