@@ -20,24 +20,28 @@ export default {
   },  
   methods: {
     converter() {
-      let from_to = this.currA + "_" + this.currB;
       let cA = this.currA;
       let cB = this.currB;
+      let amount = parseFloat(this.currA_value);
 
+      if (isNaN(amount)) {
+        this.currB_value = 0;
+        return;
+      }
+
+      // Frankfurter (ECB rates, no API key). The old currconv free API is shut down.
       let url =
-        "https://free.currconv.com/api/v7/convert?q=" +
-        from_to +
-        "&compact=ultra&apiKey=ce3469123d58a045204c";
+        "https://api.frankfurter.dev/v1/latest?base=" + cA + "&symbols=" + cB;
 
-      //fetch url
       fetch(url)
-        .then(res =>{
+        .then(res => {
+          if (!res.ok) throw new Error("HTTP " + res.status);
           return res.json();
         })
-        .then(json => {          
-          let cot = json[from_to];    
-          console.log("Current value from 1 "+cA+" to 1 "+cB+" : " + cot);      
-          this.currB_value = (cot * parseFloat(this.currA_value)).toFixed(2);
+        .then(json => {
+          let cot = json.rates[cB];
+          console.log("Current value from 1 " + cA + " to 1 " + cB + " : " + cot);
+          this.currB_value = (cot * amount).toFixed(2);
         })
         .catch(err => console.error(err));
     }
@@ -49,6 +53,27 @@ export default {
 .converter{
   padding: 20px;
   max-width: 300px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 0 var(--shadow);
+  color: var(--text);
+}
+.converter input {
+  background: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px 10px;
+  margin: 4px;
+}
+.converter input[type="button"] {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.converter input[type="button"]:hover {
+  background: var(--accent-hover);
 }
 </style>
